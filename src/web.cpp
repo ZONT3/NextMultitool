@@ -43,7 +43,7 @@ void web::setup() {
 }
 
 void web::setLedState(bool state) {
-    digitalWrite(LED_BUILTIN, state ? LOW : HIGH);
+    digitalWrite(LED_BUILTIN, state ? LED_OUTPUT_ON : LED_OUTPUT_OFF);
     ledState = state;
 }
 

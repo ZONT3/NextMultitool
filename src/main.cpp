@@ -10,8 +10,6 @@
 #include <iostream>
 #include "web.hpp"
 
-
-
 using namespace std;
 
 void setup() {
