@@ -1,0 +1,11 @@
+#include "ui.h"
+
+void ui::setup() {
+    pinMode(PIN_LCD, OUTPUT);
+    digitalWrite(PIN_LCD, HIGH);
+
+    lcd.begin(16, 2);
+    lcd.print("Kek zdarova");
+    lcd.setCursor(0, 1);
+    lcd.print("    R0FLAN_EBALO");
+}

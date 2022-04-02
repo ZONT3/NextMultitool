@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>ZONT ESP</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<noscript>
+    <div style="text-align: center">
+        <h1>Соре, но ваш браузер - додик.<br/>Сожалеем об этом.</h1>
+    </div>
+</noscript>
+<div style="text-align: center;"><h1>Верхний текст</h1></div>
+<br/>
+<script>
+    function updAllButtons(toggle) {
+        const xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", toggle ? '/toggle' : '/getState', false );
+        xmlHttp.send( null );
+        let responseText = xmlHttp.responseText;
+        console.log(`Response: '${responseText}'`)
+        const on = responseText === '1';
+
+        for (let but of document.getElementsByClassName('button_steamlike')) {
+            if (on) but.classList.add('active')
+            else but.classList.remove('active')
+        }
+    }
+</script>
+<div style="text-align: center;">
+    <p style="font-size:48pt">Текст заголовка</p>
+    <p style="font-size:16pt">Текст подзаголовка</p>
+    <p style="font-size:11pt">Дополнительный текст</p>
+    <div class="button_steamlike" style="text-align: center; width: 120px; margin: auto">
+        <a onclick="updAllButtons(true)"><span>Кнопка</span></a>
+    </div>
+</div>
+<script>
+    updAllButtons(false)
+</script>
+</body>
+</html>

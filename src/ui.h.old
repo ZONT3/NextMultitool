@@ -1,0 +1,18 @@
+#ifndef NEXTMULTITOOL_UI_H
+#define NEXTMULTITOOL_UI_H
+
+#include "Arduino.h"
+#include <cstdint>
+
+#include <LiquidCrystal.h>
+
+#include "pins.h"
+
+namespace ui {
+    LiquidCrystal lcd(PIN_RS, PIN_EN, PIN_D4, PIN_D5, PIN_D6, PIN_D7);
+
+    void setup();
+}
+
+
+#endif //NEXTMULTITOOL_UI_H
