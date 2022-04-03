@@ -1,12 +1,5 @@
 #include "Arduino.h"
 
-/* Serial\.print\((.*)\);
- * cout << $1;
- * 
- * Serial\.println\((.*)\);
- * cout << $1 << endl;
-*/
-
 #include <iostream>
 #include "web.hpp"
 

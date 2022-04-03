@@ -91,9 +91,9 @@ void web::index() {
 <div style="text-align: center;"><h1>Верхний текст</h1></div>
 <br/>
 <script>
-    function updAllButtons(toggle) {
+    async function updAllButtons(toggle) {
         const xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", toggle && '/toggle' || '/getState', false );
+        xmlHttp.open( "GET", toggle ? '/toggle' : '/getState', false );
         xmlHttp.send( null );
         let responseText = xmlHttp.responseText;
         console.log(`Response: '${responseText}'`)
@@ -114,7 +114,7 @@ void web::index() {
     </div>
 </div>
 <script>
-    updAllButtons()
+    updAllButtons(false)
 </script>
 </body>
 </html>)";

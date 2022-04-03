@@ -14,7 +14,7 @@
 <div style="text-align: center;"><h1>Верхний текст</h1></div>
 <br/>
 <script>
-    function updAllButtons(toggle) {
+    async function updAllButtons(toggle) {
         const xmlHttp = new XMLHttpRequest();
         xmlHttp.open( "GET", toggle ? '/toggle' : '/getState', false );
         xmlHttp.send( null );
@@ -33,7 +33,7 @@
     <p style="font-size:16pt">Текст подзаголовка</p>
     <p style="font-size:11pt">Дополнительный текст</p>
     <div class="button_steamlike" style="text-align: center; width: 120px; margin: auto">
-        <a onclick="updAllButtons(true)"><span>Кнопка</span></a>
+        <a onclick="updAllButtons(true);"><span>Кнопка</span></a>
     </div>
 </div>
 <script>
