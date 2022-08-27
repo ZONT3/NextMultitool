@@ -4,12 +4,20 @@
 
 #include "web.hpp"
 
+#define BUTTON_EMU_PIN 13
+#define DEFAULT_PUSH_DELAY 180
+
 WebServer web::server(80);
 bool web::ledState = false;
 
 void web::setup() {
     using namespace std;
+
+    pinMode(LED_BUILTIN, OUTPUT);
+    pinMode(BUTTON_EMU_PIN, OUTPUT);
+
     setLedState(true);
+    digitalWrite(BUTTON_EMU_PIN, LOW);
 
     WiFi.mode(WIFI_STA);
     WiFi.begin("aNat", "9037140615a");
@@ -23,6 +31,7 @@ void web::setup() {
     cout << endl;
     cout << "Connected. IP address: ";
     cout << WiFi.localIP().toString().c_str() << endl;
+    setLedState(true);
 
     if (MDNS.begin("zont-esp32"))
         cout << "MDNS responder started" << endl;
@@ -33,12 +42,12 @@ void web::setup() {
     server.on("/styles.css", styles);
 
     server.on("/getState", sendState);
-    server.on("/toggle", toggle);
+    server.on("/toggle", ctxToggle);
+    server.on("/emulatePush", ctxEmulatePush);
 
     server.begin();
     MDNS.addService("http", "tcp", 80);
 
-    pinMode(LED_BUILTIN, OUTPUT);
     setLedState(false);
 }
 
@@ -51,7 +60,21 @@ void web::sendState() {
     server.send(200, "text/plain", ledState ? "1" : "0");
 }
 
-void web::toggle() {
+void web::ctxEmulatePush() {
+    long delayVal;
+    if (server.hasArg("delay")) {
+        delayVal = server.arg("delay").toInt();
+        if (delayVal < DEFAULT_PUSH_DELAY)
+            delayVal = DEFAULT_PUSH_DELAY;
+    } else delayVal = DEFAULT_PUSH_DELAY;
+
+    server.send(200, "text/plain", "OK");
+    digitalWrite(BUTTON_EMU_PIN, HIGH);
+    delay(delayVal);
+    digitalWrite(BUTTON_EMU_PIN, LOW);
+}
+
+void web::ctxToggle() {
     setLedState(!ledState);
     sendState();
 }
@@ -104,13 +127,22 @@ void web::index() {
             else but.classList.remove('active')
         }
     }
+
+    async function pushButton() {
+        const xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", '/emulatePush', false );
+        xmlHttp.send( null );
+    }
 </script>
 <div style="text-align: center;">
     <p style="font-size:48pt">Текст заголовка</p>
     <p style="font-size:16pt">Текст подзаголовка</p>
     <p style="font-size:11pt">Дополнительный текст</p>
     <div class="button_steamlike" style="text-align: center; width: 120px; margin: auto">
-        <a onclick="updAllButtons(true);"><span>Кнопка</span></a>
+        <a onclick="updAllButtons(true);"><span>Свет</span></a>
+    </div>
+    <div class="button_steamlike" style="text-align: center; width: 46px; margin: auto">
+        <a onclick="pushButton();"><img src="https://www.svgrepo.com/show/84249/power-button.svg" width="16" height="16" /></a>
     </div>
 </div>
 <script>

@@ -27,13 +27,22 @@
             else but.classList.remove('active')
         }
     }
+
+    async function pushButton() {
+        const xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", '/emulatePush', false );
+        xmlHttp.send( null );
+    }
 </script>
 <div style="text-align: center;">
     <p style="font-size:48pt">Текст заголовка</p>
     <p style="font-size:16pt">Текст подзаголовка</p>
     <p style="font-size:11pt">Дополнительный текст</p>
     <div class="button_steamlike" style="text-align: center; width: 120px; margin: auto">
-        <a onclick="updAllButtons(true);"><span>Кнопка</span></a>
+        <a onclick="updAllButtons(true);"><span>Свет</span></a>
+    </div>
+    <div class="button_steamlike" style="text-align: center; width: 46px; margin: auto">
+        <a onclick="pushButton();"><img src="https://www.svgrepo.com/show/84249/power-button.svg" width="16" height="16" /></a>
     </div>
 </div>
 <script>

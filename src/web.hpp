@@ -24,7 +24,9 @@ namespace web {
     void styles();
     void notFound();
 
-    void toggle();
+    void ctxToggle();
+    void ctxEmulatePush();
+
     void sendState();
     void setLedState(bool state);
 }
